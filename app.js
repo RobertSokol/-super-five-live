@@ -17,7 +17,7 @@ return `<div class="admin-panel"><h3>Godkänn placeringar</h3><p>Automatiskt fö
 function standingsView(){const initial=['A','B','C','D'].map(g=>table(g,'initial')).join('');const finals=settings.finals_published?`<div class="section-head"><h2>Placeringsgrupper</h2></div>${['Guld','Silver','Brons','Safir'].map(g=>table(g,'final')).join('')}`:'';return `<div class="section-head"><h2>Tabeller · första gruppspelet</h2></div>${initial}${rankingPanel()}${finals}`}
 function render(){if(!staff)return;$('#login').hidden=true;$('#app').hidden=false;$('#who').textContent=`${staff.display_name} · ${staff.role==='admin'?'Administratör':'Domare'}`;const done=matches.filter(m=>m.home_score!==null).length;$('#metrics').innerHTML=`<div class="metric"><strong>${done}</strong><span>Rapporterade matcher</span></div><div class="metric"><strong>${matches.length-done}</strong><span>Återstående matcher</span></div><div class="metric"><strong>${settings.finals_published?'AKTIV':'VÄNTAR'}</strong><span>Placeringsgrupper</span></div>`;document.querySelectorAll('[data-tab]').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));$('#content').innerHTML=tab==='standings'?standingsView():matchesView(tab)}
 async function refresh(){if(!sb||!staff||loading)return;loading=true;try{const [mr,pr,sr]=await Promise.all([sb.from('matches').select('*').order('id'),sb.from('placements').select('*'),sb.from('settings').select('*').single()]);if(mr.error)throw mr.error;if(pr.error)throw pr.error;if(sr.error)throw sr.error;matches=mr.data;placements=pr.data;settings=sr.data;render()}catch(e){notify('Kunde inte läsa resultat: '+e.message,true)}finally{loading=false}}
-async function bootstrap(){if(!configured){$('#loginError').textContent='Konfiguration saknas. Fyll i config.js enligt README innan webbappen kan användas.';return}const {data:{session}}=await sb.auth.getSession();if(!session){$('#login').hidden=location.hash==='#registrera'?true:false;$('#register').hidden=location.hash!=='#registrera';$('#app').hidden=true;return}const {data,error}=await sb.from('staff').select('*').eq('user_id',session.user.id).single();if(error||!data){await sb.auth.signOut();$('#login').hidden=false;$('#register').hidden=true;$('#loginError').textContent='Kontot saknar domarbehörighet. Registrera dig med din engångskod.';return}staff=data;$('#register').hidden=true;await refresh()}
+async function bootstrap(){if(!configured){$('#loginError').textContent='Konfiguration saknas. Fyll i config.js enligt README innan webbappen kan användas.';return}const {data:{session}}=await sb.auth.getSession();if(!session){$('#login').hidden=location.hash==='#registrera'?true:false;$('#register').hidden=location.hash!=='#registrera';$('#app').hidden=true;return}const {data,error}=await sb.from('staff').select('*').eq('user_id',session.user.id).single();if(error||!data){await sb.auth.signOut();$('#login').hidden=false;$('#register').hidden=true;$('#loginError').textContent='Kontot saknar domarbehörighet. Registrera dig via registreringslänken.';return}staff=data;$('#register').hidden=true;await refresh()}
 $('#loginForm').addEventListener('submit',async e=>{e.preventDefault();if(!sb)return;const btn=e.target.querySelector('button');btn.disabled=true;$('#loginError').textContent='';const {error}=await sb.auth.signInWithPassword({email:$('#email').value.trim(),password:$('#password').value});btn.disabled=false;if(error){$('#loginError').textContent='Inloggning misslyckades: '+error.message;return}await bootstrap()});
 $('#logout').addEventListener('click',async()=>{await sb.auth.signOut();staff=null;$('#app').hidden=true;$('#login').hidden=false});
 document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>{tab=b.dataset.tab;render()}));
@@ -34,16 +34,16 @@ if(location.hash==='#registrera')showRegistration();
 $('#registerForm').addEventListener('submit',async e=>{
  e.preventDefault(); if(!sb)return; const btn=e.target.querySelector('button');btn.disabled=true;
  const errorBox=$('#registerError');errorBox.textContent='';
- const name=$('#regName').value.trim(),email=$('#regEmail').value.trim(),password=$('#regPassword').value,code=$('#regCode').value.trim();
+ const name=$('#regName').value.trim(),email=$('#regEmail').value.trim(),password=$('#regPassword').value;
  try{
   const signup=await sb.auth.signUp({email,password});
   if(signup.error)throw signup.error;
   if(!signup.data.session){
-   errorBox.textContent='Kontot har skapats. Bekräfta din e-post om Supabase kräver det, logga sedan in och använd registreringskoden. Kontakta arrangören om du behöver hjälp.';
+   errorBox.textContent='Kontot har skapats. Bekräfta din e-post om Supabase kräver det, logga sedan in. Om e-postbekräftelse krävs behöver arrangören hjälpa dig att aktivera domarbehörighet.';
    return;
   }
-  const redeem=await sb.rpc('redeem_referee_invite',{p_code:code,p_name:name});
-  if(redeem.error)throw redeem.error;
+  const registration=await sb.rpc('register_referee',{p_name:name});
+  if(registration.error)throw registration.error;
   location.hash='';await bootstrap();
  }catch(err){errorBox.textContent='Registreringen kunde inte slutföras: '+err.message+' Om kontot redan skapats, kontakta arrangören innan du försöker igen.'}
  finally{btn.disabled=false}
