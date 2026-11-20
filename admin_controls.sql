@@ -4,7 +4,7 @@ returns void language plpgsql security definer set search_path = '' as $$
 begin
  if not public.is_admin() then raise exception 'Endast administratör'; end if;
  delete from public.matches where phase='final';
- delete from public.placements;
+ delete from public.placements where group_name in ('A','B','C','D');
  update public.matches set home_score=null,away_score=null,submitted_by=null,submitted_at=null where phase='initial';
  update public.settings set finals_published=false where id=true;
 end $$;
@@ -14,7 +14,7 @@ returns void language plpgsql security definer set search_path = '' as $$
 begin
  if not public.is_admin() then raise exception 'Endast administratör'; end if;
  delete from public.matches where phase='final';
- delete from public.placements;
+ delete from public.placements where group_name in ('A','B','C','D');
  update public.settings set finals_published=false where id=true;
 end $$;
 
@@ -37,7 +37,7 @@ begin
   end loop;
  end loop;
  delete from public.matches where phase='final';
- delete from public.placements;
+ delete from public.placements where group_name in ('A','B','C','D');
  insert into public.placements(group_name,rank,team)
  select x->>'group',(x->>'rank')::integer,x->>'team' from jsonb_array_elements(p_placements) x;
  for k in 1..4 loop
