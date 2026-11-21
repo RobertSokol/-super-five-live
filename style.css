@@ -107,3 +107,15 @@ button:focus-visible,select:focus-visible,a:focus-visible{outline:2px solid #ff9
 @media(max-width:700px){.header-logout{padding:7px 9px;font-size:11px;min-height:34px}.heading{margin-top:0}.heading h1{margin:4px 0}.heading p{font-size:12px}.brand small{letter-spacing:.05em}}
 
 .match-target{outline:2px solid #ff9c54;outline-offset:3px;box-shadow:0 0 0 6px #ff9c5422;transition:outline .2s,box-shadow .2s;scroll-margin-top:90px}
+
+/* Compact administrator tools and referee label */
+.admin-tools-mini{margin:0 0 9px;font-size:10px;line-height:1.4;color:#9cb4c8}
+.admin-tools-mini summary{cursor:pointer;list-style:none;display:inline-block;border:1px solid #466078;border-radius:6px;padding:5px 7px;color:#b8c9d7;font-size:10px;font-weight:650}
+.admin-tools-mini summary::-webkit-details-marker{display:none}
+.admin-tools-mini[open]{position:relative;z-index:5}
+.admin-tools-mini p{font-size:11px;line-height:1.5;margin:9px 0}
+.admin-tools-mini button{font-size:11px;padding:8px 10px}
+.metric-final{position:relative}
+.match-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.match-meta .match-referee{color:#ffb187;font-weight:700;letter-spacing:0;text-transform:none}
+@media(max-width:700px){.admin-tools-mini{margin-bottom:7px}.admin-tools-mini summary{font-size:9px;padding:5px 6px}.match-meta{gap:6px}.match-meta .match-referee{font-size:10px}}
