@@ -127,3 +127,10 @@ button:focus-visible,select:focus-visible,a:focus-visible{outline:2px solid #ff9
 .reported-match{border-color:#397e69!important}
 .ref-personal-action.reported-match .ref-game-title small,.ref-row.reported-match button,.ref-match.reported-match button{color:#8de6b7}
 .match.done .status{color:#8de6b7}
+
+/* Clearer spacing between referee match rows and readable long team names. */
+.ref-personal-list{gap:13px}
+.ref-personal-action{margin:0}
+.ref-personal-row .ref-game-title{min-width:0;overflow-wrap:break-word}
+.ref-cell-game,.ref-mobile-match-main strong{overflow-wrap:break-word}
+@media(max-width:700px){.ref-personal-list{gap:12px}.ref-personal-action{padding-top:15px;padding-bottom:15px}.ref-mobile-rounds{gap:19px}.ref-mobile-match{padding-top:13px;padding-bottom:13px}}
