@@ -93,3 +93,11 @@ button:focus-visible,select:focus-visible,a:focus-visible{outline:2px solid #ff9
  .score-form input{font-size:20px}
 }
 @media(max-width:360px){.ref-mobile-match{grid-template-columns:46px minmax(0,1fr) 92px;gap:6px;padding:9px 8px}.ref-mobile-match select{max-width:92px;font-size:12px}.ref-mobile-match-main strong{font-size:12px}}
+
+/* One-tap score reporting from individual referee schedule */
+.ref-personal-action{width:100%;font:inherit;color:inherit;text-align:left;cursor:pointer;grid-template-columns:80px 90px minmax(0,1fr) 20px;transition:background .15s,border-color .15s}
+.ref-personal-action:hover,.ref-personal-action:focus-visible{background:#183c57;border-color:#ff995a}
+.ref-personal-action .ref-game-title small{display:block;color:#9ab7cc;font-size:11px;font-weight:500;margin-top:5px}
+.ref-inline-score{display:inline-block;margin-left:10px;color:#ffb078;font-style:normal;font-weight:800}
+.ref-action-arrow{font-size:26px;color:#ff9b5a;text-align:right}
+@media(max-width:650px){.ref-personal-action{grid-template-columns:52px 66px minmax(0,1fr) 14px;gap:7px;min-height:68px;padding:12px 10px}.ref-personal-action .ref-game-title small{grid-column:auto;font-size:10px}.ref-personal-action .ref-game-title{font-size:13px}.ref-personal-action .ref-action-arrow{font-size:22px}}
