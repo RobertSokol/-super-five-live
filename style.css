@@ -105,3 +105,5 @@ button:focus-visible,select:focus-visible,a:focus-visible{outline:2px solid #ff9
 /* Restrained account control in the top-right header */
 .header-logout{margin-left:auto;background:transparent;color:#aebfd0;border:1px solid #496077;border-radius:7px;padding:7px 11px;font-size:11px;font-weight:650;min-height:34px;white-space:nowrap}.header-logout:hover{color:#fff;border-color:#9bb0c4}.header-logout[hidden]{display:none!important}.heading{align-items:flex-start}
 @media(max-width:700px){.header-logout{padding:7px 9px;font-size:11px;min-height:34px}.heading{margin-top:0}.heading h1{margin:4px 0}.heading p{font-size:12px}.brand small{letter-spacing:.05em}}
+
+.match-target{outline:2px solid #ff9c54;outline-offset:3px;box-shadow:0 0 0 6px #ff9c5422;transition:outline .2s,box-shadow .2s;scroll-margin-top:90px}
