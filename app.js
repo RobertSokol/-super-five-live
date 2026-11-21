@@ -1,6 +1,6 @@
 import {createClient} from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 import {SUPABASE_URL,SUPABASE_ANON_KEY} from './config.js';
-const $=s=>document.querySelector(s), esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const $=s=>document.querySelector(s), esc=s=>String(s??'').replace(/(Arameiska-Syrianska) ([12])\b/g,'$1\u00a0$2').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const configured=!SUPABASE_URL.includes('REPLACE_')&&!SUPABASE_ANON_KEY.includes('REPLACE_');
 const sb=configured?createClient(SUPABASE_URL,SUPABASE_ANON_KEY):null;
 let me=null,staff=null,matches=[],placements=[],settings={},tab='my',loading=false,refAssignments=[],myReferee=null;
