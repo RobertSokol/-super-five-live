@@ -119,3 +119,11 @@ button:focus-visible,select:focus-visible,a:focus-visible{outline:2px solid #ff9
 .match-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .match-meta .match-referee{color:#ffb187;font-weight:700;letter-spacing:0;text-transform:none}
 @media(max-width:700px){.admin-tools-mini{margin-bottom:7px}.admin-tools-mini summary{font-size:9px;padding:5px 6px}.match-meta{gap:6px}.match-meta .match-referee{font-size:10px}}
+
+/* iOS Safari: 16px prevents focus zoom on login and score inputs. */
+@media(max-width:800px){#login input,#register input,.score-form input,.fixture-editor input{font-size:16px!important;line-height:1.4}#login,#register{max-width:100%;min-width:0}html{-webkit-text-size-adjust:100%}}
+/* Small, readable confirmation and completed-match states. */
+#notice.notice-success{background:#103e34;border:1px solid #3e9474;border-radius:9px;padding:11px 13px;margin:10px 0;color:#b9f7d5!important;font-size:13px;font-weight:700}
+.reported-match{border-color:#397e69!important}
+.ref-personal-action.reported-match .ref-game-title small,.ref-row.reported-match button,.ref-match.reported-match button{color:#8de6b7}
+.match.done .status{color:#8de6b7}
